@@ -1,0 +1,68 @@
+@page "/my-admin/payroll"
+@namespace MyAdmin.Pages.Payroll
+
+<MudToolBar Dense="true" Class="mb-2">
+    <MudText Typo="Typo.h5" Class="fw-bold">Payroll</MudText>
+    <MudSpacer />
+    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="BtnCloseClick">Close</MudButton>
+</MudToolBar>
+
+<MudDataGrid T="TPayrollInfoDto"
+             Items="@_payrollItems"
+             Dense="true"
+             Hover="true"
+             Striped="true"
+             FixedHeader="true"
+             Height="400px"
+             SelectedItem="@_selectedItem"
+             RowClassFunc='@((item, _) => item == _selectedItem ? "mz-row-selected" : string.Empty)'
+             SelectedItemChanged="OnSelectedItemChanged"
+             ReadOnly="true">
+    <Columns>
+        <PropertyColumn Property="x => x.PayrollId" Title="ID" />
+        <PropertyColumn Property="x => x.EmployeeName" Title="Employee" />
+        <PropertyColumn Property="x => x.Period" Title="Period" />
+        <PropertyColumn Property="x => x.GrossPay" Title="Gross Pay" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <PropertyColumn Property="x => x.Deductions" Title="Deductions" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <PropertyColumn Property="x => x.NetPay" Title="Net Pay" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <PropertyColumn Property="x => x.PayDate" Title="Pay Date" Format="d" />
+    </Columns>
+</MudDataGrid>
+
+@if (_showEditPanel)
+{
+    <MudPaper Class="pa-4 mt-2" Elevation="2">
+        <MudGrid>
+            <MudItem xs="12" sm="4">
+                <MudTextField T="string" Label="Employee" @bind-Value="_state!.EdtEmployeeText" />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudTextField T="string" Label="Period" @bind-Value="_state!.EdtPeriodText" />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudTextField T="string" Label="Gross Pay" @bind-Value="_state!.EdtGrossPayText" />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudTextField T="string" Label="Deductions" @bind-Value="_state!.EdtDeductionsText" />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudTextField T="string" Label="Pay Date" @bind-Value="_state!.EdtPayDateText" />
+            </MudItem>
+            <MudItem xs="12" sm="6" Class="d-flex align-end gap-2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="BtnSaveClick">Save</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="BtnCancelClick">Cancel</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}
+
+<MudToolBar Dense="true" Class="mt-2">
+    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="BtnRefreshClick">Refresh</MudButton>
+    <MudText Typo="Typo.body1" Class="mx-4">@_totalGrossLabel</MudText>
+    <MudText Typo="Typo.body1" Class="mx-4">@_totalNetLabel</MudText>
+    <MudText Typo="Typo.body1" Class="mx-4">@_totalDeductionsLabel</MudText>
+    <MudSpacer />
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="BtnAddClick">Add</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="BtnEditClick" Class="mx-1">Edit</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="BtnDeleteClick">Delete</MudButton>
+</MudToolBar>

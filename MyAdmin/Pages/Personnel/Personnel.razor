@@ -1,0 +1,109 @@
+@page "/my-admin/personnel"
+@namespace MyAdmin.Pages.Personnel
+
+@using MyAdmin.Application.Services.Personnel
+@using MudBlazor
+
+<MudPaper Class="pa-4">
+    <MudToolBar Dense="true" Class="mb-4">
+        <MudText Typo="Typo.h5" Style="font-weight:bold;">Personnel Management</MudText>
+        <MudSpacer />
+        <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@BtnCloseClick">Close</MudButton>
+    </MudToolBar>
+
+    <MudDataGrid T="TEmployeeInfoDto"
+                 Items="@_employees"
+                 Dense="true"
+                 Striped="true"
+                 Hover="true"
+                 SelectedItem="@_selectedEmployee"
+                 RowClassFunc='@((item, _) => item == _selectedEmployee ? "mz-row-selected" : string.Empty)'
+                 SelectedItemChanged="OnSelectedItemChanged"
+                 RowsPerPage="25">
+        <Columns>
+            <PropertyColumn Property="x => x.EmployeeId" Title="ID" />
+            <PropertyColumn Property="x => x.FirstName" Title="First Name" />
+            <PropertyColumn Property="x => x.LastName" Title="Last Name" />
+            <PropertyColumn Property="x => x.Position" Title="Position" />
+            <PropertyColumn Property="x => x.HireDate" Title="Hire Date" Format="d" />
+            <PropertyColumn Property="x => x.Salary" Title="Salary" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+            <TemplateColumn Title="Active">
+                <CellTemplate>
+                    <MudText>@(context.Item.Active ? "Yes" : "No")</MudText>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="TEmployeeInfoDto" />
+        </PagerContent>
+    </MudDataGrid>
+
+    @if (_showEditPanel)
+    {
+        <MudPaper Class="pa-4 mt-4" Elevation="2">
+            <MudGrid>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="@_state!.EdtFirstNameText"
+                                  Label="First Name"
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="@_state!.EdtLastNameText"
+                                  Label="Last Name"
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudSelect T="string"
+                               @bind-Value="@_state!.CmbPositionText"
+                               Label="Position"
+                               Variant="Variant.Outlined">
+                        <MudSelectItem Value="@("Head Chef")">Head Chef</MudSelectItem>
+                        <MudSelectItem Value="@("Sous Chef")">Sous Chef</MudSelectItem>
+                        <MudSelectItem Value="@("Floor Manager")">Floor Manager</MudSelectItem>
+                        <MudSelectItem Value="@("Bartender")">Bartender</MudSelectItem>
+                        <MudSelectItem Value="@("Waiter")">Waiter</MudSelectItem>
+                        <MudSelectItem Value="@("Host")">Host</MudSelectItem>
+                        <MudSelectItem Value="@("Dishwasher")">Dishwasher</MudSelectItem>
+                        <MudSelectItem Value="@("Line Cook")">Line Cook</MudSelectItem>
+                        <MudSelectItem Value="@("General Manager")">General Manager</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="@_state!.EdtHireDateText"
+                                  Label="Hire Date"
+                                  Variant="Variant.Outlined"
+                                  Placeholder="MM/dd/yyyy" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="@_state!.EdtSalaryText"
+                                  Label="Salary"
+                                  Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudSelect T="string"
+                               @bind-Value="@_activeSelection"
+                               Label="Active"
+                               Variant="Variant.Outlined">
+                        <MudSelectItem Value="@("Yes")">Yes</MudSelectItem>
+                        <MudSelectItem Value="@("No")">No</MudSelectItem>
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" Class="d-flex justify-end gap-2">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnSaveClick">Save</MudButton>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@BtnCancelClick">Cancel</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    }
+
+    <MudToolBar Dense="true" Class="mt-4">
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="@BtnRefreshClick">Refresh</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="@BtnShowActiveClick">Show Active Only</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@BtnShowAllClick">Show All</MudButton>
+        <MudSpacer />
+        <MudText Typo="Typo.body1" Class="mr-4">@_employeeCountLabel</MudText>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@OnAddClick">Add</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@OnEditClick" Disabled="@(_selectedEmployee == null)">Edit</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@OnDeleteClick" Disabled="@(_selectedEmployee == null)">Delete</MudButton>
+    </MudToolBar>
+</MudPaper>

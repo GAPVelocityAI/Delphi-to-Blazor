@@ -1,0 +1,12 @@
+@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<div style="display:flex; flex-direction:column; height:100vh; overflow:hidden;">
+    <div style="flex:1; overflow:auto;">
+        @Body
+    </div>
+</div>

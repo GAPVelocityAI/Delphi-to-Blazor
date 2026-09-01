@@ -1,0 +1,100 @@
+@page "/my-admin/assets"
+@namespace MyAdmin.Pages.Assets
+
+<MudToolBar Dense="true" Class="mb-2">
+    <MudText Typo="Typo.h5" Class="fw-bold">Assets Management</MudText>
+    <MudSpacer />
+    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@btnCloseClick">Close</MudButton>
+</MudToolBar>
+
+<MudDataGrid T="TAssetInfoDto"
+             Items="@_assets"
+             Dense="true"
+             Hover="true"
+             Striped="true"
+             SelectedItem="@_selectedAsset"
+             RowClassFunc='@((item, _) => item == _selectedAsset ? "mz-row-selected" : string.Empty)'
+             SelectedItemChanged="@OnSelectedAssetChanged"
+             Loading="@_loading"
+             Class="mb-4">
+    <Columns>
+        <PropertyColumn Property="x => x.AssetId" Title="ID" />
+        <PropertyColumn Property="x => x.AssetName" Title="Asset Name" />
+        <PropertyColumn Property="x => x.Category" Title="Category" />
+        <PropertyColumn Property="x => x.PurchaseDate" Title="Purchase Date" Format="d" />
+        <PropertyColumn Property="x => x.Value" Title="Value" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <PropertyColumn Property="x => x.DepreciatedValue" Title="Depreciated" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <PropertyColumn Property="x => x.Status" Title="Status" />
+    </Columns>
+</MudDataGrid>
+
+@if (_state?.FIsAdding == true || _editPanelVisible)
+{
+    <MudPaper Class="pa-4 mb-4" Elevation="2">
+        <MudGrid>
+            <MudItem xs="12" sm="4">
+                <MudTextField @bind-Value="@_state!.EdtAssetNameText"
+                              Label="Asset Name"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudSelect T="string"
+                           @bind-Value="@_state!.CmbAssetCategoryText"
+                           Label="Category"
+                           Variant="Variant.Outlined"
+                           Margin="Margin.Dense">
+                    <MudSelectItem Value="@("Kitchen Equipment")">Kitchen Equipment</MudSelectItem>
+                    <MudSelectItem Value="@("Technology")">Technology</MudSelectItem>
+                    <MudSelectItem Value="@("Furniture")">Furniture</MudSelectItem>
+                    <MudSelectItem Value="@("Vehicle")">Vehicle</MudSelectItem>
+                    <MudSelectItem Value="@("Bar")">Bar</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudTextField @bind-Value="@_state!.EdtPurchaseDateText"
+                              Label="Purchase Date"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              Placeholder="MM/dd/yyyy" />
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudTextField @bind-Value="@_state!.EdtValueText"
+                              Label="Value"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudTextField @bind-Value="@_state!.EdtDepreciatedText"
+                              Label="Depreciated"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudSelect T="string"
+                           @bind-Value="@_state!.CmbAssetStatusText"
+                           Label="Status"
+                           Variant="Variant.Outlined"
+                           Margin="Margin.Dense">
+                    <MudSelectItem Value="@("Active")">Active</MudSelectItem>
+                    <MudSelectItem Value="@("Needs Repair")">Needs Repair</MudSelectItem>
+                    <MudSelectItem Value="@("Disposed")">Disposed</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-end gap-2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@btnSaveClick">Save</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@btnCancelClick">Cancel</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}
+
+<MudToolBar Dense="true">
+    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@btnRefreshClick">Refresh</MudButton>
+    <MudText Class="ml-4">@_totalValueText</MudText>
+    <MudText Class="ml-4">@_totalDepreciatedText</MudText>
+    <MudSpacer />
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@btnAddClick">Add</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="@btnEditClick" Class="ml-2">Edit</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@btnDeleteClick" Class="ml-2">Delete</MudButton>
+</MudToolBar>

@@ -1,0 +1,24 @@
+<Router AppAssembly="@typeof(Program).Assembly"
+            AdditionalAssemblies="@_moduleAssemblies">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Shared.MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(Shared.MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+@code {
+    // Loaded by assembly name (not a compile-time type reference) so the Host
+    // doesn't need to know any specific page/component type from a UI module —
+    // it only needs to know which module assemblies exist.
+    private static readonly System.Reflection.Assembly[] _moduleAssemblies = new[]
+    {
+        System.Reflection.Assembly.Load("MyAdmin"),
+        System.Reflection.Assembly.Load("MyRestaurant")
+    };
+}

@@ -1,0 +1,102 @@
+@page "/bills"
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+    <MudPaper Elevation="2" Class="pa-4">
+        @* pnlTop — Title and Close *@
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mb-4">
+            <MudText Typo="Typo.h5" Style="font-weight:bold;">Bills &amp; Checks</MudText>
+            <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="BtnCloseClick">Close</MudButton>
+        </MudStack>
+
+        @* grdBills — Bill data grid *@
+        <MudDataGrid T="TBillInfoDto"
+                     Items="_bills"
+                     SelectedItem="_selectedBill"
+                     RowClassFunc='@((item, _) => item == _selectedBill ? "mz-row-selected" : string.Empty)'
+                     SelectedItemChanged="OnSelectedBillChanged"
+                     Hover="true"
+                     Dense="true"
+                     Striped="true"
+                     FixedHeader="true"
+                     Height="400px"
+                     Style="min-height:200px;">
+            <Columns>
+                <PropertyColumn Property="x => x.BillId" Title="Bill ID" />
+                <PropertyColumn Property="x => x.OrderId" Title="Order ID" />
+                <TemplateColumn Title="Subtotal">
+                    <CellTemplate>
+                        <MudText>@context.Item.Subtotal.ToString("C2", System.Globalization.CultureInfo.InvariantCulture)</MudText>
+                    </CellTemplate>
+                </TemplateColumn>
+                <TemplateColumn Title="Tax">
+                    <CellTemplate>
+                        <MudText>@context.Item.Tax.ToString("C2", System.Globalization.CultureInfo.InvariantCulture)</MudText>
+                    </CellTemplate>
+                </TemplateColumn>
+                <TemplateColumn Title="Tip">
+                    <CellTemplate>
+                        <MudText>@context.Item.Tip.ToString("C2", System.Globalization.CultureInfo.InvariantCulture)</MudText>
+                    </CellTemplate>
+                </TemplateColumn>
+                <TemplateColumn Title="Total">
+                    <CellTemplate>
+                        <MudText>@context.Item.Total.ToString("C2", System.Globalization.CultureInfo.InvariantCulture)</MudText>
+                    </CellTemplate>
+                </TemplateColumn>
+                <PropertyColumn Property="x => x.PaymentMethod" Title="Payment" />
+                <TemplateColumn Title="Date">
+                    <CellTemplate>
+                        <MudText>@context.Item.PaidDate.ToString("yyyy-MM-dd HH:mm")</MudText>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+
+        @* pnlBottom — Action buttons and summary *@
+        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="mt-4">
+            <MudStack Row="true" Spacing="2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="BtnRefreshClick">Refresh</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="BtnAddClick">Add</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" OnClick="BtnEditClick">Edit</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="BtnDeleteClick">Delete</MudButton>
+            </MudStack>
+            @* pnlSummary *@
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.body2">@_totalBillsText</MudText>
+                <MudText Typo="Typo.body2">@_totalRevenueText</MudText>
+            </MudStack>
+        </MudStack>
+
+        @* pnlEdit — Add/Edit form *@
+        @if (_editPanelVisible)
+        {
+            <MudPaper Elevation="1" Class="pa-4 mt-4">
+                <MudGrid>
+                    <MudItem xs="12" sm="4">
+                        <MudTextField @bind-Value="_state!.EdtOrderIdText" Label="Order ID:" Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="4">
+                        <MudTextField @bind-Value="_state!.EdtSubtotalText" Label="Subtotal:" Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="4">
+                        <MudTextField @bind-Value="_state!.EdtTipText" Label="Tip:" Variant="Variant.Outlined" />
+                    </MudItem>
+                    <MudItem xs="12" sm="4">
+                        <MudSelect T="string" @bind-Value="_selectedPaymentMethod" Label="Payment:" Variant="Variant.Outlined">
+                            @foreach (var method in _paymentMethods)
+                            {
+                                <MudSelectItem T="string" Value="@method">@method</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" sm="8">
+                        <MudStack Row="true" Spacing="2" Class="mt-2">
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="BtnSaveClick">Save</MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="BtnCancelClick">Cancel</MudButton>
+                        </MudStack>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        }
+    </MudPaper>
+</MudContainer>

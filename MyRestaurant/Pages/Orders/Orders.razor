@@ -1,0 +1,95 @@
+@page "/my-restaurant/orders"
+@namespace MyRestaurant.Pages.Orders
+
+<PageTitle>Orders</PageTitle>
+
+<MudToolBar Dense="true" Class="mb-2">
+    <MudText Typo="Typo.h5" Class="mr-auto" Style="font-weight:bold;">Orders Management</MudText>
+    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@btnCloseClick">Close</MudButton>
+</MudToolBar>
+
+<MudDataGrid T="TOrderInfoDto"
+             Items="@_orders"
+             Dense="true"
+             Hover="true"
+             Striped="true"
+             SelectedItem="@_selectedOrder"
+             RowClassFunc='@((item, _) => item == _selectedOrder ? "mz-row-selected" : string.Empty)'
+             SelectedItemChanged="@grdOrdersSelectCell"
+             Style="min-height:300px;">
+    <Columns>
+        <PropertyColumn Property="x => x.OrderId" Title="Order ID" />
+        <PropertyColumn Property="x => x.TableId" Title="Table" />
+        <PropertyColumn Property="x => x.OrderDate" Title="Date" Format="yyyy-MM-dd HH:mm" />
+        <PropertyColumn Property="x => x.Status" Title="Status" />
+        <PropertyColumn Property="x => x.TotalAmount" Title="Total" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+    </Columns>
+</MudDataGrid>
+
+<MudText Typo="Typo.h6" Class="mt-4 mb-2">Order Details</MudText>
+
+<MudDataGrid T="TOrderDetailInfoDto"
+             Items="@_orderDetails"
+             Dense="true"
+             Hover="true"
+             Striped="true"
+             Style="min-height:180px;">
+    <Columns>
+        <PropertyColumn Property="x => x.DetailId" Title="Detail ID" />
+        <PropertyColumn Property="x => x.ItemName" Title="Item" />
+        <PropertyColumn Property="x => x.Quantity" Title="Qty" />
+        <PropertyColumn Property="x => x.UnitPrice" Title="Unit Price" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <PropertyColumn Property="x => x.Subtotal" Title="Subtotal" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+    </Columns>
+</MudDataGrid>
+
+<MudToolBar Dense="true" Class="mt-2 mb-2">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@btnRefreshClick">Refresh</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="@btnViewDetailsClick">View Details</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@btnAddClick">Add</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Warning" OnClick="@btnEditClick">Edit</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@btnDeleteClick">Delete</MudButton>
+</MudToolBar>
+
+@if (_editPanelVisible)
+{
+    <MudPaper Class="pa-4 mt-2" Elevation="2">
+        <MudGrid>
+            <MudItem xs="12" sm="4">
+                <MudTextField @bind-Value="_edtTableIdText"
+                              Label="Table ID:"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudSelect T="string"
+                           @bind-Value="_selectedStatus"
+                           Label="Status:"
+                           Variant="Variant.Outlined">
+                    <MudSelectItem Value="@("Pending")">Pending</MudSelectItem>
+                    <MudSelectItem Value="@("Preparing")">Preparing</MudSelectItem>
+                    <MudSelectItem Value="@("Served")">Served</MudSelectItem>
+                    <MudSelectItem Value="@("Paid")">Paid</MudSelectItem>
+                    <MudSelectItem Value="@("Cancelled")">Cancelled</MudSelectItem>
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="4">
+                <MudTextField @bind-Value="_edtTotalAmountText"
+                              Label="Total Amount:"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex gap-2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@btnSaveClick">Save</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@btnCancelClick">Cancel</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}
+
+<MudMessageBox @ref="_deleteConfirmBox"
+               Title="Confirm Delete"
+               CancelText="No"
+               YesText="Yes">
+    <MessageContent>
+        Delete this order?
+    </MessageContent>
+</MudMessageBox>

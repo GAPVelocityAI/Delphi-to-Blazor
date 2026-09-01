@@ -1,0 +1,9 @@
+global using global::MyRestaurant.Application.DTOs.Bill;
+global using global::MyRestaurant.Application.DTOs.Orders;
+global using global::MyRestaurant.Application.DTOs.Tables;
+global using global::MyRestaurant.Application.Services.Bill;
+global using global::MyRestaurant.Application.Services.Orders;
+global using global::MyRestaurant.Application.Services.Tables;
+global using global::MyRestaurant.Pages.Bill;
+global using global::MyRestaurant.Pages.Orders;
+global using global::MyRestaurant.Pages.Tables;

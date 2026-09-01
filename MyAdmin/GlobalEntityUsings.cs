@@ -1,0 +1,9 @@
+global using global::MyAdmin.Application.DTOs.Assets;
+global using global::MyAdmin.Application.DTOs.Payroll;
+global using global::MyAdmin.Application.DTOs.Personnel;
+global using global::MyAdmin.Application.Services.Assets;
+global using global::MyAdmin.Application.Services.Payroll;
+global using global::MyAdmin.Application.Services.Personnel;
+global using global::MyAdmin.Pages.Assets;
+global using global::MyAdmin.Pages.Payroll;
+global using global::MyAdmin.Pages.Personnel;

@@ -1,0 +1,259 @@
+object frmPersonnel: TfrmPersonnel
+  Left = 0
+  Top = 0
+  Caption = 'Personnel Management'
+  ClientHeight = 500
+  ClientWidth = 750
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Position = poMainFormCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 15
+  object pnlTop: TPanel
+    Left = 0
+    Top = 0
+    Width = 750
+    Height = 45
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 0
+    object lblTitle: TLabel
+      Left = 16
+      Top = 12
+      Width = 200
+      Height = 20
+      Caption = 'Personnel Management'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object btnClose: TButton
+      Left = 660
+      Top = 8
+      Width = 75
+      Height = 30
+      Caption = 'Close'
+      TabOrder = 0
+      OnClick = btnCloseClick
+    end
+  end
+  object grdPersonnel: TStringGrid
+    Left = 0
+    Top = 45
+    Width = 750
+    Height = 405
+    Align = alClient
+    ColCount = 7
+    DefaultRowHeight = 22
+    FixedCols = 0
+    RowCount = 2
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goColSizing]
+    TabOrder = 1
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Top = 450
+    Width = 750
+    Height = 50
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 2
+    object lblCount: TLabel
+      Left = 500
+      Top = 16
+      Width = 80
+      Height = 15
+      Caption = 'Employees: 0'
+    end
+    object btnRefresh: TButton
+      Left = 16
+      Top = 10
+      Width = 85
+      Height = 30
+      Caption = 'Refresh'
+      TabOrder = 0
+      OnClick = btnRefreshClick
+    end
+    object btnShowActive: TButton
+      Left = 115
+      Top = 10
+      Width = 120
+      Height = 30
+      Caption = 'Show Active Only'
+      TabOrder = 1
+      OnClick = btnShowActiveClick
+    end
+    object btnShowAll: TButton
+      Left = 249
+      Top = 10
+      Width = 85
+      Height = 30
+      Caption = 'Show All'
+      TabOrder = 2
+      OnClick = btnShowAllClick
+    end
+    object btnAdd: TButton
+      Left = 520
+      Top = 10
+      Width = 70
+      Height = 30
+      Caption = 'Add'
+      TabOrder = 3
+      OnClick = btnAddClick
+    end
+    object btnEdit: TButton
+      Left = 596
+      Top = 10
+      Width = 70
+      Height = 30
+      Caption = 'Edit'
+      TabOrder = 4
+      OnClick = btnEditClick
+    end
+    object btnDelete: TButton
+      Left = 672
+      Top = 10
+      Width = 70
+      Height = 30
+      Caption = 'Delete'
+      TabOrder = 5
+      OnClick = btnDeleteClick
+    end
+  end
+  object pnlEdit: TPanel
+    Left = 0
+    Top = 390
+    Width = 750
+    Height = 110
+    Align = alBottom
+    BevelOuter = bvNone
+    Visible = False
+    TabOrder = 3
+    object lblEdtFirstName: TLabel
+      Left = 16
+      Top = 8
+      Width = 59
+      Height = 15
+      Caption = 'First Name'
+    end
+    object edtFirstName: TEdit
+      Left = 16
+      Top = 26
+      Width = 120
+      Height = 23
+      TabOrder = 0
+    end
+    object lblEdtLastName: TLabel
+      Left = 150
+      Top = 8
+      Width = 57
+      Height = 15
+      Caption = 'Last Name'
+    end
+    object edtLastName: TEdit
+      Left = 150
+      Top = 26
+      Width = 120
+      Height = 23
+      TabOrder = 1
+    end
+    object lblEdtPosition: TLabel
+      Left = 284
+      Top = 8
+      Width = 44
+      Height = 15
+      Caption = 'Position'
+    end
+    object cmbPosition: TComboBox
+      Left = 284
+      Top = 26
+      Width = 150
+      Height = 23
+      Style = csDropDownList
+      Items.Strings = (
+        'Head Chef'
+        'Sous Chef'
+        'Floor Manager'
+        'Bartender'
+        'Waiter'
+        'Host'
+        'Dishwasher'
+        'Line Cook'
+        'General Manager')
+      TabOrder = 2
+    end
+    object lblEdtHireDate: TLabel
+      Left = 16
+      Top = 52
+      Width = 52
+      Height = 15
+      Caption = 'Hire Date'
+    end
+    object edtHireDate: TEdit
+      Left = 16
+      Top = 70
+      Width = 100
+      Height = 23
+      TabOrder = 3
+    end
+    object lblEdtSalary: TLabel
+      Left = 130
+      Top = 52
+      Width = 33
+      Height = 15
+      Caption = 'Salary'
+    end
+    object edtSalary: TEdit
+      Left = 130
+      Top = 70
+      Width = 120
+      Height = 23
+      TabOrder = 4
+    end
+    object lblEdtActive: TLabel
+      Left = 264
+      Top = 52
+      Width = 34
+      Height = 15
+      Caption = 'Active'
+    end
+    object cmbActive: TComboBox
+      Left = 264
+      Top = 70
+      Width = 80
+      Height = 23
+      Style = csDropDownList
+      Items.Strings = (
+        'Yes'
+        'No')
+      TabOrder = 5
+    end
+    object btnSave: TButton
+      Left = 500
+      Top = 70
+      Width = 80
+      Height = 30
+      Caption = 'Save'
+      TabOrder = 6
+      OnClick = btnSaveClick
+    end
+    object btnCancel: TButton
+      Left = 590
+      Top = 70
+      Width = 80
+      Height = 30
+      Caption = 'Cancel'
+      TabOrder = 7
+      OnClick = btnCancelClick
+    end
+  end
+end

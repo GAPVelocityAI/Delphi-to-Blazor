@@ -1,0 +1,81 @@
+@using MyRestaurant.Application.DTOs.Food
+@page "/my-restaurant/food-cost"
+@namespace MyRestaurant.Pages.Food
+
+<PageTitle>Food Cost</PageTitle>
+
+<MudToolBar Dense="true" Class="mb-2">
+    <MudText Typo="Typo.h5" Class="fw-bold">Food Cost Analysis</MudText>
+    <MudSpacer />
+    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="BtnCloseClick">Close</MudButton>
+</MudToolBar>
+
+<MudDataGrid T="TFoodCostInfoDto"
+             Items="@_foodCosts"
+             Dense="true"
+             Striped="true"
+             Hover="true"
+             SelectedItem="@_selectedItem"
+             RowClassFunc='@((item, _) => item == _selectedItem ? "mz-row-selected" : string.Empty)'
+             SelectedItemChanged="OnSelectedItemChanged">
+    <Columns>
+        <PropertyColumn Property="x => x.RecipeId" Title="Recipe ID" />
+        <PropertyColumn Property="x => x.RecipeName" Title="Recipe" />
+        <PropertyColumn Property="x => x.IngredientCount" Title="Ingredients" />
+        <PropertyColumn Property="x => x.TotalCost" Title="Cost" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <PropertyColumn Property="x => x.SellingPrice" Title="Selling Price" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+        <TemplateColumn Title="Cost %">
+            <CellTemplate>
+                @{
+                    var pct = context.Item.CostPercentage;
+                    var bgColor = GetCostPercentageCellColor(pct);
+                    var style = $"color: #000; background-color: {bgColor}";
+                }
+                <MudText Style="@style" Class="px-1 rounded">
+                    @(Math.Round(pct, 1, MidpointRounding.ToEven).ToString("0.0", _invariantCulture))%
+                </MudText>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>
+
+<MudToolBar Dense="true" Class="mt-2">
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="BtnRefreshClick">Refresh</MudButton>
+    <MudText Typo="Typo.body1" Class="mx-4">@_avgCostPctText</MudText>
+    <MudSpacer />
+    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="BtnAddClick">Add</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Warning" OnClick="BtnEditClick" Class="mx-1">Edit</MudButton>
+    <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="BtnDeleteClick">Delete</MudButton>
+</MudToolBar>
+
+@if (_editPanelVisible)
+{
+    <MudPaper Class="pa-4 mt-2" Elevation="2">
+        <MudGrid>
+            <MudItem xs="12" sm="3">
+                <MudTextField @bind-Value="@_state!.EdtRecipeNameText"
+                              Label="Recipe Name:"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="2">
+                <MudTextField @bind-Value="@_state!.EdtIngredientsText"
+                              Label="Ingredients:"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudTextField @bind-Value="@_state!.EdtTotalCostText"
+                              Label="Total Cost:"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" sm="3">
+                <MudTextField @bind-Value="@_state!.EdtSellingPriceText"
+                              Label="Selling Price:"
+                              Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" Class="d-flex gap-2 justify-end">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="BtnSaveClick">Save</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="BtnCancelClick">Cancel</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+}

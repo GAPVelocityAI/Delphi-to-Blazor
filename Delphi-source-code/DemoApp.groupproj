@@ -1,0 +1,168 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{00A1B2C3-D4E5-F678-9012-ABCDEF000001}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="CommonLib\CommonLib.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DemoApp\DemoApp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyRestaurant\MyRestaurant.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyAdmin\MyAdmin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyFinance\MyFinanceAssets\MyFinanceAssets.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyFinance\MyFinancePersonnel\MyFinancePersonnel.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyFinance\MyFinancePayroll\MyFinancePayroll.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyInventory\MyInventoryStock\MyInventoryStock.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyInventory\MyInventoryFoodCost\MyInventoryFoodCost.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="MyInventory\MyInventoryMenu\MyInventoryMenu.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Providers\ProvidersCore\ProvidersCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Providers\ProvidersSupplies\ProvidersSupplies.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CommonLib">
+        <MSBuild Projects="CommonLib\CommonLib.dproj"/>
+    </Target>
+    <Target Name="CommonLib:Clean">
+        <MSBuild Projects="CommonLib\CommonLib.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CommonLib:Make">
+        <MSBuild Projects="CommonLib\CommonLib.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DemoApp">
+        <MSBuild Projects="DemoApp\DemoApp.dproj"/>
+    </Target>
+    <Target Name="DemoApp:Clean">
+        <MSBuild Projects="DemoApp\DemoApp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DemoApp:Make">
+        <MSBuild Projects="DemoApp\DemoApp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyRestaurant">
+        <MSBuild Projects="MyRestaurant\MyRestaurant.dproj"/>
+    </Target>
+    <Target Name="MyRestaurant:Clean">
+        <MSBuild Projects="MyRestaurant\MyRestaurant.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyRestaurant:Make">
+        <MSBuild Projects="MyRestaurant\MyRestaurant.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyAdmin">
+        <MSBuild Projects="MyAdmin\MyAdmin.dproj"/>
+    </Target>
+    <Target Name="MyAdmin:Clean">
+        <MSBuild Projects="MyAdmin\MyAdmin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyAdmin:Make">
+        <MSBuild Projects="MyAdmin\MyAdmin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyFinanceAssets">
+        <MSBuild Projects="MyFinance\MyFinanceAssets\MyFinanceAssets.dproj"/>
+    </Target>
+    <Target Name="MyFinanceAssets:Clean">
+        <MSBuild Projects="MyFinance\MyFinanceAssets\MyFinanceAssets.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyFinanceAssets:Make">
+        <MSBuild Projects="MyFinance\MyFinanceAssets\MyFinanceAssets.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyFinancePersonnel">
+        <MSBuild Projects="MyFinance\MyFinancePersonnel\MyFinancePersonnel.dproj"/>
+    </Target>
+    <Target Name="MyFinancePersonnel:Clean">
+        <MSBuild Projects="MyFinance\MyFinancePersonnel\MyFinancePersonnel.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyFinancePersonnel:Make">
+        <MSBuild Projects="MyFinance\MyFinancePersonnel\MyFinancePersonnel.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyFinancePayroll">
+        <MSBuild Projects="MyFinance\MyFinancePayroll\MyFinancePayroll.dproj"/>
+    </Target>
+    <Target Name="MyFinancePayroll:Clean">
+        <MSBuild Projects="MyFinance\MyFinancePayroll\MyFinancePayroll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyFinancePayroll:Make">
+        <MSBuild Projects="MyFinance\MyFinancePayroll\MyFinancePayroll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyInventoryStock">
+        <MSBuild Projects="MyInventory\MyInventoryStock\MyInventoryStock.dproj"/>
+    </Target>
+    <Target Name="MyInventoryStock:Clean">
+        <MSBuild Projects="MyInventory\MyInventoryStock\MyInventoryStock.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyInventoryStock:Make">
+        <MSBuild Projects="MyInventory\MyInventoryStock\MyInventoryStock.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyInventoryFoodCost">
+        <MSBuild Projects="MyInventory\MyInventoryFoodCost\MyInventoryFoodCost.dproj"/>
+    </Target>
+    <Target Name="MyInventoryFoodCost:Clean">
+        <MSBuild Projects="MyInventory\MyInventoryFoodCost\MyInventoryFoodCost.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyInventoryFoodCost:Make">
+        <MSBuild Projects="MyInventory\MyInventoryFoodCost\MyInventoryFoodCost.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MyInventoryMenu">
+        <MSBuild Projects="MyInventory\MyInventoryMenu\MyInventoryMenu.dproj"/>
+    </Target>
+    <Target Name="MyInventoryMenu:Clean">
+        <MSBuild Projects="MyInventory\MyInventoryMenu\MyInventoryMenu.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MyInventoryMenu:Make">
+        <MSBuild Projects="MyInventory\MyInventoryMenu\MyInventoryMenu.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ProvidersCore">
+        <MSBuild Projects="Providers\ProvidersCore\ProvidersCore.dproj"/>
+    </Target>
+    <Target Name="ProvidersCore:Clean">
+        <MSBuild Projects="Providers\ProvidersCore\ProvidersCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ProvidersCore:Make">
+        <MSBuild Projects="Providers\ProvidersCore\ProvidersCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ProvidersSupplies">
+        <MSBuild Projects="Providers\ProvidersSupplies\ProvidersSupplies.dproj"/>
+    </Target>
+    <Target Name="ProvidersSupplies:Clean">
+        <MSBuild Projects="Providers\ProvidersSupplies\ProvidersSupplies.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ProvidersSupplies:Make">
+        <MSBuild Projects="Providers\ProvidersSupplies\ProvidersSupplies.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CommonLib;DemoApp;MyRestaurant;MyAdmin;MyFinanceAssets;MyFinancePersonnel;MyFinancePayroll;MyInventoryStock;MyInventoryFoodCost;MyInventoryMenu;ProvidersCore;ProvidersSupplies"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CommonLib:Clean;DemoApp:Clean;MyRestaurant:Clean;MyAdmin:Clean;MyFinanceAssets:Clean;MyFinancePersonnel:Clean;MyFinancePayroll:Clean;MyInventoryStock:Clean;MyInventoryFoodCost:Clean;MyInventoryMenu:Clean;ProvidersCore:Clean;ProvidersSupplies:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CommonLib:Make;DemoApp:Make;MyRestaurant:Make;MyAdmin:Make;MyFinanceAssets:Make;MyFinancePersonnel:Make;MyFinancePayroll:Make;MyInventoryStock:Make;MyInventoryFoodCost:Make;MyInventoryMenu:Make;ProvidersCore:Make;ProvidersSupplies:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -1,0 +1,84 @@
+@page "/my-restaurant/tables"
+@namespace MyRestaurant.Pages.Tables
+
+<PageTitle>Tables</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="my-4">
+
+    <MudToolBar Dense="true" Class="mb-2">
+        <MudText Typo="Typo.h6">Tables</MudText>
+        <MudSpacer />
+        <MudButton Variant="Variant.Outlined" Class="mx-1" OnClick="BtnRefreshClick">Refresh</MudButton>
+        <MudButton Variant="Variant.Outlined" Class="mx-1" OnClick="BtnFilterAvailableClick">Available only</MudButton>
+        <MudButton Variant="Variant.Outlined" Class="mx-1" OnClick="BtnShowAllClick">Show all</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Default" Class="mx-1" OnClick="BtnCloseClick">Close</MudButton>
+    </MudToolBar>
+
+    <MudDataGrid T="TTableInfoDto"
+                 Items="_displayedTables"
+                 Dense="true"
+                 Hover="true"
+                 Striped="true"
+                 Filterable="false"
+                 SelectedItem="@_selectedItem"
+                 RowClassFunc='@((item, _) => item == _selectedItem ? "mz-row-selected" : string.Empty)'
+                 SelectedItemChanged="@OnSelectedItemChanged">
+        <Columns>
+            <PropertyColumn Property="x => x.TableNumber" Title="Table" />
+            <PropertyColumn Property="x => x.Capacity" Title="Seats" />
+            <PropertyColumn Property="x => x.Zone" Title="Zone" />
+            <PropertyColumn Property="x => x.Status" Title="Status" />
+        </Columns>
+    </MudDataGrid>
+
+    <MudPaper Class="pa-4 mt-4 d-flex align-center" Outlined="true">
+        <MudButton Variant="Variant.Filled" Color="Color.Success" Class="mr-2"
+                   OnClick="BtnAddClick">Add</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mr-2"
+                   OnClick="BtnEditClick">Edit</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" Class="mr-2"
+                   OnClick="BtnDeleteClick">Delete</MudButton>
+        <MudSpacer />
+        <MudText Typo="Typo.body2">
+            @(_selectedItem is null ? "No table selected" : $"Selected: table {_selectedItem.TableNumber}")
+        </MudText>
+    </MudPaper>
+
+    @if (_editPanelVisible)
+    {
+        <MudPaper Class="pa-4 mt-4" Outlined="true">
+            <MudText Typo="Typo.subtitle1" Class="mb-2">Edit table</MudText>
+
+            <MudTextField T="string" Label="Table number" Margin="Margin.Dense" Class="mb-2"
+                         Value="@_state!.EdtNumberText"
+                         ValueChanged="@(v => _state!.EdtNumberText = v)" />
+
+            <MudTextField T="string" Label="Capacity" Margin="Margin.Dense" Class="mb-2"
+                         Value="@_state!.EdtCapacityText"
+                         ValueChanged="@(v => _state!.EdtCapacityText = v)" />
+
+            <MudSelect T="int" Value="_selectedStatusIndex" ValueChanged="@(v => _selectedStatusIndex = v)"
+                       Label="Status" Dense="true" Class="mb-2">
+                @for (var i = 0; i < StatusNames.Length; i++)
+                {
+                    var idx = i;
+                    <MudSelectItem T="int" Value="@idx">@StatusNames[idx]</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudSelect T="int" Value="_selectedZoneIndex" ValueChanged="@(v => _selectedZoneIndex = v)"
+                       Label="Zone" Dense="true" Class="mb-2">
+                @for (var i = 0; i < ZoneNames.Length; i++)
+                {
+                    var idx = i;
+                    <MudSelectItem T="int" Value="@idx">@ZoneNames[idx]</MudSelectItem>
+                }
+            </MudSelect>
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mr-2"
+                       OnClick="BtnSaveClick">Save</MudButton>
+            <MudButton Variant="Variant.Outlined" OnClick="BtnCancelClick">Cancel</MudButton>
+        </MudPaper>
+    }
+
+</MudContainer>

@@ -1,0 +1,82 @@
+@page "/"
+@page "/demo-app/main"
+@namespace DemoApp.Pages.Main
+
+<PageTitle>Main</PageTitle>
+
+<MudLayout>
+    <MudAppBar Color="Color.Dark" Fixed="false" Dense="true">
+        <MudText Typo="Typo.h5" Class="ml-4" Style="color: white; font-weight: bold;">
+            DemoApp - Restaurant Management System
+        </MudText>
+    </MudAppBar>
+
+    <MudDrawer Open="true" Variant="DrawerVariant.Persistent" ClipMode="DrawerClipMode.Always"
+               Width="220px" Elevation="1" Style="background-color: #f0f0f0;">
+        <MudNavMenu>
+            <MudText Typo="Typo.subtitle1" Class="ml-3 mt-4 mb-1" Style="color: navy; font-weight: bold;">
+                Restaurant
+            </MudText>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnTablesClick" Style="text-transform: none; font-size: 0.95rem;">
+                Tables
+            </MudButton>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnOrdersClick" Style="text-transform: none; font-size: 0.95rem;">
+                Orders
+            </MudButton>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnMenuClick" Style="text-transform: none; font-size: 0.95rem;">
+                Menu
+            </MudButton>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnBillCheckClick" Style="text-transform: none; font-size: 0.95rem;">
+                Bill / Check
+            </MudButton>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnFoodCostClick" Style="text-transform: none; font-size: 0.95rem;">
+                Food Cost
+            </MudButton>
+
+            <MudDivider Class="my-2" />
+
+            <MudText Typo="Typo.subtitle1" Class="ml-3 mt-2 mb-1" Style="color: navy; font-weight: bold;">
+                Administration
+            </MudText>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnAssetsClick" Style="text-transform: none; font-size: 0.95rem;">
+                Assets
+            </MudButton>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnPersonnelClick" Style="text-transform: none; font-size: 0.95rem;">
+                Personnel
+            </MudButton>
+
+            <MudButton FullWidth="true" Variant="Variant.Text" Class="mx-2 my-1 justify-start"
+                       OnClick="@BtnPayrollClick" Style="text-transform: none; font-size: 0.95rem;">
+                Payroll
+            </MudButton>
+        </MudNavMenu>
+    </MudDrawer>
+
+    <MudMainContent Class="pa-4" Style="min-height: 500px;">
+        <MudContainer MaxWidth="MaxWidth.Large" Class="d-flex align-center justify-center" Style="min-height: 480px;">
+            <MudText Typo="Typo.h6" Color="Color.Default" Style="color: gray;">
+                Select a module from the sidebar
+            </MudText>
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+<MudToolBar Dense="true" Style="background-color: #f5f5f5; border-top: 1px solid #ddd;">
+    <MudText Typo="Typo.body2" Class="mr-4">@StatusText</MudText>
+    <MudSpacer />
+    <MudText Typo="Typo.body2">@DateText</MudText>
+</MudToolBar>

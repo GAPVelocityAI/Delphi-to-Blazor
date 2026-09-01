@@ -1,0 +1,24 @@
+/* Selected-row highlight for MudDataGrid.
+   MudBlazor only marks selected rows when MultiSelection is on; these grids use
+   single-selection via SelectedItem, so each grid tags its own row through
+   RowClassFunc and the rules below paint it.
+
+   The selectors have to out-specify MudBlazor's striping and hover rules, which
+   both set a background on the same element. */
+
+.mud-table-row.mz-row-selected,
+.mud-table-striped tbody .mud-table-row.mz-row-selected:nth-of-type(odd),
+.mud-table-striped tbody .mud-table-row.mz-row-selected:nth-of-type(even),
+.mud-table-hover tbody .mud-table-row.mz-row-selected:hover {
+    background-color: rgba(var(--mud-palette-primary-rgb, 89, 74, 226), 0.16) !important;
+}
+
+/* Left accent bar: an inset shadow on the first cell, so it survives the
+   horizontal scroll container without a pseudo-element overlaying the text. */
+.mud-table-row.mz-row-selected > td:first-child {
+    box-shadow: inset 3px 0 0 0 rgb(var(--mud-palette-primary-rgb, 89, 74, 226));
+}
+
+.mud-table-row.mz-row-selected > td {
+    font-weight: 500;
+}

@@ -1,0 +1,128 @@
+@using MyRestaurant.Application.DTOs.Menu
+@page "/my-restaurant/menu-view"
+@namespace MyRestaurant.Pages.Menu
+@implements IDisposable
+
+<PageTitle>Menu View</PageTitle>
+
+<MudToolBar Dense="true" Class="mb-2">
+    <MudText Typo="Typo.h5" Class="mr-auto"><b>Menu</b></MudText>
+    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@BtnCloseClick">Close</MudButton>
+</MudToolBar>
+
+<MudPaper Class="pa-4">
+    <MudDataGrid T="TMenuItemInfoDto"
+                 Items="@_displayedItems"
+                 Dense="true"
+                 Hover="true"
+                 Striped="true"
+                 SelectedItem="@_selectedItem"
+                 RowClassFunc='@((item, _) => item == _selectedItem ? "mz-row-selected" : string.Empty)'
+                 SelectedItemChanged="@OnSelectedItemChanged"
+                 RowsPerPage="25">
+        <Columns>
+            <PropertyColumn Property="x => x.ItemId" Title="ID" />
+            <PropertyColumn Property="x => x.ItemName" Title="Name" />
+            <PropertyColumn Property="x => x.Category" Title="Category" />
+            <PropertyColumn Property="x => x.Price" Title="Price" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+            <PropertyColumn Property="x => x.Cost" Title="Cost" Format="C2" Culture='@System.Globalization.CultureInfo.GetCultureInfo("en-US")' />
+            <TemplateColumn Title="Active">
+                <CellTemplate>
+                    @(context.Item.Active ? "Yes" : "No")
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+        <PagerContent>
+            <MudDataGridPager T="TMenuItemInfoDto" />
+        </PagerContent>
+    </MudDataGrid>
+
+    <MudToolBar Dense="true" Class="mt-2">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@BtnRefreshClick">Refresh</MudButton>
+        <MudText Typo="Typo.body1" Class="mx-2 align-self-center">Filter by Category:</MudText>
+        <MudSelect T="string"
+                   Value="@_selectedCategory"
+                   ValueChanged="@CmbCategoryChange"
+                   Variant="Variant.Outlined"
+                   Dense="true"
+                   Margin="Margin.Dense"
+                   Style="max-width: 180px;">
+            @foreach (var cat in _categoryOptions)
+            {
+                <MudSelectItem Value="@cat">@cat</MudSelectItem>
+            }
+        </MudSelect>
+        <MudSpacer />
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@BtnAddClick">Add</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Warning" OnClick="@BtnEditClick" Disabled="@(_selectedItem == null)">Edit</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="@BtnDeleteClick" Disabled="@(_selectedItem == null)">Delete</MudButton>
+    </MudToolBar>
+
+    @if (_editPanelVisible)
+    {
+        <MudPaper Class="pa-4 mt-4" Elevation="2">
+            <MudGrid>
+                <MudItem xs="12" sm="4">
+                    <MudTextField T="string"
+                                  Label="Name:"
+                                  @bind-Value="@_edtItemNameText"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" sm="3">
+                    <MudSelect T="string"
+                               Label="Category:"
+                               @bind-Value="@_cmbEditCategoryText"
+                               Variant="Variant.Outlined"
+                               Dense="true"
+                               Margin="Margin.Dense">
+                        @foreach (var cat in _editCategoryOptions)
+                        {
+                            <MudSelectItem Value="@cat">@cat</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" sm="2">
+                    <MudTextField T="string"
+                                  Label="Price:"
+                                  @bind-Value="@_edtPriceText"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" sm="2">
+                    <MudTextField T="string"
+                                  Label="Cost:"
+                                  @bind-Value="@_edtCostText"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudItem>
+                <MudItem xs="12" sm="2">
+                    <MudSelect T="string"
+                               Label="Active:"
+                               @bind-Value="@_selectedActive"
+                               Variant="Variant.Outlined"
+                               Dense="true"
+                               Margin="Margin.Dense">
+                        @foreach (var opt in _activeOptions)
+                        {
+                            <MudSelectItem Value="@opt">@opt</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" Class="d-flex gap-2 justify-end">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@BtnSaveClick">Save</MudButton>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Default" OnClick="@BtnCancelClick">Cancel</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    }
+</MudPaper>
+
+<MudMessageBox @ref="_deleteConfirmBox"
+               Title="Confirm Delete"
+               CancelText="No"
+               YesText="Yes">
+    <MessageContent>
+        Delete this menu item?
+    </MessageContent>
+</MudMessageBox>
